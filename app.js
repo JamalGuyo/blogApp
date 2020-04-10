@@ -17,7 +17,7 @@ const blogSchema = new mongoose.Schema({
   title: String,
   image: String,
   body: String,
-  created: Date,
+  created: { type: Date, default: Date.now },
 });
 const Blog = mongoose.model("Blog", blogSchema);
 
@@ -29,7 +29,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // routes
 // INDEX ROUTE
 app.get("/", (req, res) => {
-  res.render("index");
+  res.redirect("/blogs");
+});
+app.get("/blogs", (req, res) => {
+  Blog.find({}, (err, blogs) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("index", { blogs });
+    }
+  });
 });
 
 // listener
