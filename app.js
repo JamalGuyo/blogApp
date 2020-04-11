@@ -65,6 +65,17 @@ app.post("/blogs", (req, res) => {
   );
 });
 
+// SHOW ROUTE
+app.get("/blogs/:id", (req, res) => {
+  Blog.findById(req.params.id, (error, blog) => {
+    if (error) {
+      console.log(error);
+    } else {
+      res.render("show", { blog });
+    }
+  });
+});
+
 // listener
 const port = process.env.PORT || 3000;
 app.listen(port, () =>
