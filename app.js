@@ -41,6 +41,30 @@ app.get("/blogs", (req, res) => {
   });
 });
 
+// NEW ROUTE
+app.get("/blogs/new", (req, res) => {
+  res.render("new");
+});
+
+// CREATE ROUTE
+app.post("/blogs", (req, res) => {
+  Blog.create(
+    {
+      title: req.body.blog.title,
+      image: req.body.blog.image,
+      body: req.body.blog.body,
+      created: req.body.blog.created,
+    },
+    (error, blog) => {
+      if (error) {
+        console.log(error);
+      } else {
+        res.redirect("/blogs");
+      }
+    }
+  );
+});
+
 // listener
 const port = process.env.PORT || 3000;
 app.listen(port, () =>
